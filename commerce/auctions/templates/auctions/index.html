@@ -1,0 +1,23 @@
+
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<p>Total items found: {{ auction_listings|length }}</p>
+    <h2>Active Listings</h2>
+    <div class="auction_listings ">
+        {% for listing in auction_listings %}
+        <div class="card">
+             {% if listing.image_url %}
+            <a href="{% url 'listing_details' listing.id %}">
+                <img src="{{ listing.image_url }}" alt="{{ listing.name }}"></a>
+            {% endif %}
+            <h2> <a href="{% url 'listing_details' listing.id %}">{{listing.name}}</a></h2>
+            <p>Current Price: ${{ listing.price }}</p>
+           
+            <p> Posted on: {{ listing.date_created }}</p>
+            <a href="{% url 'listing_details' listing.id %}" class="btn">View Listing</a>
+        </div>{% empty %}
+        <p>No active listings at the moment.</p>
+        {% endfor %}
+    </div>
+{% endblock%}
